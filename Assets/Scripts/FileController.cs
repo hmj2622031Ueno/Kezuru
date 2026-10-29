@@ -4,10 +4,12 @@ using UnityEngine.InputSystem;
 public class FileController : MonoBehaviour
 {
 	private Vector3 startPosition;  // ヤスリの初期位置
-	private Camera mainCamera;	// マウスの位置を取得するカメラ
+	private Camera mainCamera;  // マウスの位置を取得するカメラ
+	public bool isTouchWood = false;
+	//FileController fileController;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+	// Start is called once before the first execution of Update after the MonoBehaviour is created
+	void Start()
     {
         startPosition = transform.position;	// ゲーム開始時のヤスリの初期位置
 		mainCamera = Camera.main;	// メインカメラの取得
@@ -28,4 +30,14 @@ public class FileController : MonoBehaviour
 
 		transform.position = new Vector3(startPosition.x, startPosition.y, worldPosition.z);	// z軸のみ変更
     }
+
+	private void OnTriggerEnter(Collider other)
+	{
+		if (other.gameObject.CompareTag("Wood")) { isTouchWood = true;}
+	}
+
+	private void OnTrigerExit(Collider other)
+	{
+		if (other.gameObject.CompareTag("Wood")) { isTouchWood = false; }
+	}
 }
